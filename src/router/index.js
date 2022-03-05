@@ -4,12 +4,18 @@ const routes = [
     {
         path: '/',
         name: 'Dashboard',
-        component: () => import("@/views/Dashboard.vue" /* webpackChunkName: "Views/Dashboard" */)
+        component: () => import("@/views/Dashboard.vue" /* webpackChunkName: "Views/Dashboard" */),
+        meta: {
+            auth: false
+        },
     },
     {
         path: "/profile/",
         name: "Profile",
         component: () => import("@/views/Profile/Profile.vue" /* webpackChunkName: "Views/Profile" */),
+        meta: {
+            auth: true
+        },
         children: [
             {
                 path: ":name",
@@ -24,6 +30,15 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.auth) {
+        console.log('test')
+        next('/')
+    } else {
+        next()
+    }
 })
 
 export default router
