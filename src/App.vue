@@ -1,13 +1,34 @@
-<script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
-</script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <main>
+    <BaseInput v-model="title" label="Title" type="text" />
+    <BaseInput v-model="password" label="Password" type="password" />
+    {{ title }}
+    <button @click="getTitle">Get Title</button>
+  </main>
 </template>
+
+<script>
+import { ref } from "vue"
+import BaseInput from "./components/BaseInput.vue"
+
+export default {
+  components: {
+    BaseInput
+  },
+  setup() {
+    const title = ref(null)
+    const password = ref(null)
+
+    const getTitle = () => {
+      console.log("Title:", title.value)
+      console.log("Password:", password.value)
+    }
+
+    return { title, password, getTitle }
+  },
+}
+</script>
 
 <style>
 #app {
